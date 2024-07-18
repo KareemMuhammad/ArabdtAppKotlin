@@ -12,12 +12,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.arabdtappkotlin.networks.ApiService
-import com.example.arabdtappkotlin.screens.HomeScreen
+import com.example.arabdtappkotlin.view.HomeScreen
 import com.example.arabdtappkotlin.ui.theme.AppTheme
-import com.example.arabdtappkotlin.screens.LoginScreen
-import com.example.arabdtappkotlin.screens.OnboardingScreen
-import com.example.arabdtappkotlin.screens.SplashScreen
+import com.example.arabdtappkotlin.view.LoginScreen
+import com.example.arabdtappkotlin.view.OnboardingScreen
+import com.example.arabdtappkotlin.view.SplashScreen
 import com.example.arabdtappkotlin.utils.Constants
 
 class MainActivity : ComponentActivity() {

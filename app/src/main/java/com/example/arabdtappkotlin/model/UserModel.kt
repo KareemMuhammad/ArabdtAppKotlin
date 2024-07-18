@@ -1,16 +1,22 @@
-package com.example.arabdtappkotlin.models
+package com.example.arabdtappkotlin.model
 
 import com.google.gson.annotations.SerializedName
 
+data class LoginResponse(
+    val statusCode: Int,
+    val message: String,
+    val body: LoginDataModel
+)
+
 data class LoginDataModel(
-    @SerializedName("token") val token: String = "",
+    @SerializedName("sid") val token: String = "",
     @SerializedName("api_key") val apiKey: String = "",
     @SerializedName("api_secret") val apiSecret: String = "",
     @SerializedName("email") val email: String = "",
     @SerializedName("full_name") val fullName: String = "",
     @SerializedName("employee") val employee: String = "",
-    @SerializedName("current_user_profile") val currentUserProfile: UserResponseModel? = null,
-    @SerializedName("role") val role: UserRole = UserRole.EMPLOYEE
+    @SerializedName("user_data") val currentUserProfile: UserResponseModel? = null,
+    @SerializedName("role_profile") val role: UserRole = UserRole.EMPLOYEE
 ) {
     enum class UserRole {
         @SerializedName("employee")

@@ -1,4 +1,4 @@
-package com.example.arabdtappkotlin.screens
+package com.example.arabdtappkotlin.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -13,6 +13,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -20,12 +21,17 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.arabdtappkotlin.R
+import com.example.arabdtappkotlin.model.LoginDataModel
 import com.example.arabdtappkotlin.networks.RetrofitClient
-import com.example.arabdtappkotlin.screens.helpers.appTextFieldColors
-import com.example.arabdtappkotlin.screens.helpers.appTextFieldModifier
+import com.example.arabdtappkotlin.view.helpers.appTextFieldColors
+import com.example.arabdtappkotlin.view.helpers.appTextFieldModifier
 import com.example.arabdtappkotlin.utils.Constants
-import com.example.arabdtappkotlin.viewModels.UiState
-import com.example.arabdtappkotlin.viewModels.UserViewModel
+import com.example.arabdtappkotlin.utils.PreferencesManager
+import com.example.arabdtappkotlin.viewModel.UiState
+import com.example.arabdtappkotlin.viewModel.UserViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 @Composable
@@ -34,9 +40,12 @@ fun LoginScreen(navController: NavController) {
     var password by remember { mutableStateOf("") }
     var isEmailExists by remember { mutableStateOf(false) }
     var isPasswordExists by remember { mutableStateOf(false) }
-    val viewModel = UserViewModel(apiService = RetrofitClient.apiService)
-    val state by viewModel.state.collectAsState()
+    val viewModel = UserViewModel(authApiService = RetrofitClient.authApiService)
+    val isLoading by viewModel.isLoading.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+
+    println("UserViewModel: ${isLoading}")
 
     LaunchedEffect(Unit) {
         val savedEmail = ""
@@ -45,13 +54,6 @@ fun LoginScreen(navController: NavController) {
         password = savedPassword
         isEmailExists = savedEmail.isNotEmpty()
         isPasswordExists = savedPassword.isNotEmpty()
-    }
-
-    when (state) {
-        is UiState.Init -> Unit
-        is UiState.Error -> Unit
-        is UiState.Loading -> CircularProgressIndicator()
-        is UiState.Success -> navController.navigate(Constants.HOME_SCREEN_KEY)
     }
 
     Column(
@@ -124,12 +126,22 @@ fun LoginScreen(navController: NavController) {
             }
         )
         Spacer(modifier = Modifier.height(24.dp))
+
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
+                var loginData: LoginDataModel?
                 if (isEmailExists && isPasswordExists) {
                     coroutineScope.launch {
-                        viewModel.login(email = email, password = password)
+                        loginData =
+                            async { viewModel.login(email = email, password = password) }.await()
+                        if (loginData != null) {
+                            PreferencesManager(context = context).saveString(
+                                key = PreferencesManager.TOKEN_KEY,
+                                loginData?.token ?: ""
+                            )
+                            navController.navigate(Constants.HOME_SCREEN_KEY)
+                        }
                     }
                 }
             },
@@ -144,6 +156,10 @@ fun LoginScreen(navController: NavController) {
                 style = MaterialTheme.typography.bodyLarge
             )
         }
+        if (isLoading) {
+            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+        }
+
     }
 
 }
