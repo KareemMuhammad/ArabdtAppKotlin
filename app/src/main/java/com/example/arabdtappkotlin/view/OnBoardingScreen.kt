@@ -97,7 +97,7 @@ fun OnboardingScreen(navController: NavController) {
             noOfPages = onboardPages.size
         ) {
             currentPage.value++
-            if (currentPage.value == onboardPages.size) {
+            if (currentPage.value == (onboardPages.size - 1)) {
                 PreferencesManager(context = context).saveBoolean(
                     key = PreferencesManager.ONBOARDING_KEY,
                     true

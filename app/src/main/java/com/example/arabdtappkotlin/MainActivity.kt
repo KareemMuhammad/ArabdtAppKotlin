@@ -12,15 +12,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.arabdtappkotlin.networks.RetrofitClient
 import com.example.arabdtappkotlin.view.HomeScreen
 import com.example.arabdtappkotlin.ui.theme.AppTheme
 import com.example.arabdtappkotlin.view.LoginScreen
 import com.example.arabdtappkotlin.view.OnboardingScreen
 import com.example.arabdtappkotlin.view.SplashScreen
 import com.example.arabdtappkotlin.utils.Constants
+import com.example.arabdtappkotlin.viewModel.UserViewModel
 
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -38,12 +39,18 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun MainScreen(){
+fun MainScreen() {
+    val viewModel = UserViewModel(authApiService = RetrofitClient.authApiService)
     val navController = rememberNavController()
     NavHost(navController, startDestination = Constants.SPLASH_SCREEN_KEY) {
         composable(Constants.SPLASH_SCREEN_KEY) { SplashScreen(navController) }
         composable(Constants.ONBOARDING_SCREEN_KEY) { OnboardingScreen(navController) }
-        composable(Constants.LOGIN_SCREEN_KEY) { LoginScreen(navController) }
+        composable(Constants.LOGIN_SCREEN_KEY) {
+            LoginScreen(
+                navController,
+                userViewModel = viewModel
+            )
+        }
         composable(Constants.HOME_SCREEN_KEY) { HomeScreen(navController) }
     }
 }

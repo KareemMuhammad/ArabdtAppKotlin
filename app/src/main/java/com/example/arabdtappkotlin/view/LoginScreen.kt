@@ -8,6 +8,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
@@ -21,31 +22,38 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.arabdtappkotlin.R
-import com.example.arabdtappkotlin.model.LoginDataModel
-import com.example.arabdtappkotlin.networks.RetrofitClient
 import com.example.arabdtappkotlin.view.helpers.appTextFieldColors
 import com.example.arabdtappkotlin.view.helpers.appTextFieldModifier
 import com.example.arabdtappkotlin.utils.Constants
-import com.example.arabdtappkotlin.utils.PreferencesManager
 import com.example.arabdtappkotlin.viewModel.UiState
 import com.example.arabdtappkotlin.viewModel.UserViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController, userViewModel: UserViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isEmailExists by remember { mutableStateOf(false) }
     var isPasswordExists by remember { mutableStateOf(false) }
-    val viewModel = UserViewModel(authApiService = RetrofitClient.authApiService)
-    val isLoading by viewModel.isLoading.collectAsState()
-    val coroutineScope = rememberCoroutineScope()
+    var showSnackbar by remember { mutableStateOf(false) }
+    var snackbarMessage by remember { mutableStateOf("") }
+    val state by userViewModel.state.collectAsState()
     val context = LocalContext.current
 
-    println("UserViewModel: ${isLoading}")
+    println("state::: $state")
+    LaunchedEffect(state) {
+        when (state) {
+            is UiState.Init -> Unit
+            is UiState.Loading -> Unit
+            is UiState.Success -> {
+                navController.navigate(Constants.HOME_SCREEN_KEY)
+            }
+
+            is UiState.Error -> {
+                showSnackbar = true
+                snackbarMessage = (state as UiState.Error).ex
+            }
+        }
+    }
 
     LaunchedEffect(Unit) {
         val savedEmail = ""
@@ -127,38 +135,46 @@ fun LoginScreen(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(24.dp))
 
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = {
-                var loginData: LoginDataModel?
-                if (isEmailExists && isPasswordExists) {
-                    coroutineScope.launch {
-                        loginData =
-                            async { viewModel.login(email = email, password = password) }.await()
-                        if (loginData != null) {
-                            PreferencesManager(context = context).saveString(
-                                key = PreferencesManager.TOKEN_KEY,
-                                loginData?.token ?: ""
-                            )
-                            navController.navigate(Constants.HOME_SCREEN_KEY)
-                        }
-                    }
-                }
-            },
-            enabled = isEmailExists && isPasswordExists,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = if (isEmailExists && isPasswordExists) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary
-            )
-        ) {
-            Text(
-                "Login",
-                Modifier.padding(8.dp),
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
-        if (isLoading) {
+        if (state is UiState.Loading) {
             CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+        } else {
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    if (isEmailExists && isPasswordExists) {
+                        userViewModel.login(
+                            email = email,
+                            password = password,
+                            context
+                        )
+                    }
+                },
+                enabled = isEmailExists && isPasswordExists,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (isEmailExists && isPasswordExists) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary
+                )
+            ) {
+                Text(
+                    "Login",
+                    Modifier.padding(8.dp),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         }
+        Box(modifier = Modifier.weight(1f))
+            if (showSnackbar) {
+            Snackbar(
+                action = {
+                    TextButton(onClick = { showSnackbar = false }) {
+                        Text("OK")
+                    }
+                },
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Text(text = (state as UiState.Error).ex)
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
 
     }
 
