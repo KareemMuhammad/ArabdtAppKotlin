@@ -1,4 +1,4 @@
-package com.example.arabdtappkotlin.view
+package com.example.arabdtappkotlin.ui.view.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.example.arabdtappkotlin.R
-import com.example.arabdtappkotlin.utils.Constants
+import com.example.arabdtappkotlin.ui.navigation.Routes
 import com.example.arabdtappkotlin.utils.PreferencesManager
 import kotlinx.coroutines.delay
 
@@ -24,9 +24,9 @@ fun SplashScreen(navController: NavController) {
     LaunchedEffect(key1 = Unit) {
         delay(2000)
         if (isOnboarded) {
-            if(userToken.isNullOrEmpty()) {
+            if (userToken.isNullOrEmpty()) {
                 navigateToLoginScreen(navController)
-            }else{
+            } else {
                 navigateToHomeScreen(navController)
             }
         } else {
@@ -43,19 +43,19 @@ fun SplashScreen(navController: NavController) {
 }
 
 private fun navigateToOnBoardingScreen(navController: NavController) {
-    navController.navigate(Constants.ONBOARDING_SCREEN_KEY) {
-        popUpTo(Constants.SPLASH_SCREEN_KEY) { inclusive = true }
+    navController.navigate(Routes.ONBOARDING_SCREEN_KEY) {
+        popUpTo(Routes.SPLASH_SCREEN_KEY) { inclusive = true }
     }
 }
 
 private fun navigateToHomeScreen(navController: NavController) {
-    navController.navigate(Constants.HOME_SCREEN_KEY) {
-        popUpTo(Constants.SPLASH_SCREEN_KEY) { inclusive = true }
+    navController.navigate(Routes.HOME_SCREEN_KEY) {
+        popUpTo(Routes.SPLASH_SCREEN_KEY) { inclusive = true }
     }
 }
 
 private fun navigateToLoginScreen(navController: NavController) {
-    navController.navigate(Constants.LOGIN_SCREEN_KEY) {
-        popUpTo(Constants.SPLASH_SCREEN_KEY) { inclusive = true }
+    navController.navigate(Routes.LOGIN_SCREEN_KEY) {
+        popUpTo(Routes.SPLASH_SCREEN_KEY) { inclusive = true }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.arabdtappkotlin.view
+package com.example.arabdtappkotlin.ui.view.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,7 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.arabdtappkotlin.R
-import com.example.arabdtappkotlin.utils.Constants
+import com.example.arabdtappkotlin.ui.navigation.Routes
 import com.example.arabdtappkotlin.utils.PreferencesManager
 
 data class OnboardPage(
@@ -102,7 +102,7 @@ fun OnboardingScreen(navController: NavController) {
                     key = PreferencesManager.ONBOARDING_KEY,
                     true
                 )
-                navController.navigate(Constants.LOGIN_SCREEN_KEY)
+                navController.navigate(Routes.LOGIN_SCREEN_KEY)
             }
         }
     }

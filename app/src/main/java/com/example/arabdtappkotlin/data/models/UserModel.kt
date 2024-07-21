@@ -1,4 +1,4 @@
-package com.example.arabdtappkotlin.model
+package com.example.arabdtappkotlin.data.models
 
 import com.google.gson.annotations.SerializedName
 

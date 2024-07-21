@@ -1,4 +1,4 @@
-package com.example.arabdtappkotlin.view.helpers
+package com.example.arabdtappkotlin.ui.helpers
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background

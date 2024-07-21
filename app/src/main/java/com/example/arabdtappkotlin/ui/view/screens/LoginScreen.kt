@@ -1,4 +1,4 @@
-package com.example.arabdtappkotlin.view
+package com.example.arabdtappkotlin.ui.view.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -22,9 +22,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.arabdtappkotlin.R
-import com.example.arabdtappkotlin.view.helpers.appTextFieldColors
-import com.example.arabdtappkotlin.view.helpers.appTextFieldModifier
-import com.example.arabdtappkotlin.utils.Constants
+import com.example.arabdtappkotlin.ui.helpers.appTextFieldColors
+import com.example.arabdtappkotlin.ui.helpers.appTextFieldModifier
+import com.example.arabdtappkotlin.ui.navigation.Routes
 import com.example.arabdtappkotlin.viewModel.UiState
 import com.example.arabdtappkotlin.viewModel.UserViewModel
 
@@ -45,7 +45,7 @@ fun LoginScreen(navController: NavController, userViewModel: UserViewModel) {
             is UiState.Init -> Unit
             is UiState.Loading -> Unit
             is UiState.Success -> {
-                navController.navigate(Constants.HOME_SCREEN_KEY)
+                navController.navigate(Routes.HOME_SCREEN_KEY)
             }
 
             is UiState.Error -> {

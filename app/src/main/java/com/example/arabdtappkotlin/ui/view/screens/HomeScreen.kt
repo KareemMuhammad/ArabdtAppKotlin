@@ -1,4 +1,4 @@
-package com.example.arabdtappkotlin.view
+package com.example.arabdtappkotlin.ui.view.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

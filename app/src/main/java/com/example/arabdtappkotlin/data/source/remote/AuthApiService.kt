@@ -1,9 +1,8 @@
-package com.example.arabdtappkotlin.networks
+package com.example.arabdtappkotlin.data.source.remote
 
-import com.example.arabdtappkotlin.model.LoginDataModel
-import com.example.arabdtappkotlin.model.LoginResponse
-import com.example.arabdtappkotlin.model.requests.LoginRequest
-import com.google.gson.JsonObject
+import com.example.arabdtappkotlin.data.models.LoginDataModel
+import com.example.arabdtappkotlin.data.models.LoginResponse
+import com.example.arabdtappkotlin.data.models.requests.LoginRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

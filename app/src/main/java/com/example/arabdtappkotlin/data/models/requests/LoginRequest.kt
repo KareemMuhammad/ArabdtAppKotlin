@@ -1,4 +1,4 @@
-package com.example.arabdtappkotlin.model.requests
+package com.example.arabdtappkotlin.data.models.requests
 
 data class LoginRequest(
     val email: String,
