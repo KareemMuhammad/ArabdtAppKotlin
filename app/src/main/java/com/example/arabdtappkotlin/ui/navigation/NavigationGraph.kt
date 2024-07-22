@@ -15,7 +15,12 @@ import com.example.arabdtappkotlin.viewModel.UserViewModel
 @Composable
 fun AppNavigationGraph() {
     val viewModel =
-        UserViewModel(authRepository = AuthRepositoryImpl(apiService = App.retrofit.authApiService))
+        UserViewModel(
+            authRepository = AuthRepositoryImpl(
+                apiService = App.retrofit.authApiService,
+                appRoomDatabase = App.appDatabase
+            )
+        )
     val navController = rememberNavController()
     NavHost(navController, startDestination = Routes.SPLASH_SCREEN_KEY) {
         composable(Routes.SPLASH_SCREEN_KEY) { SplashScreen(navController) }
