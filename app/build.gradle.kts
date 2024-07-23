@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation (libs.androidx.foundation)
+    implementation (libs.androidx.constraintlayout.compose)
+    implementation (libs.ui)
     // Retrofit
     implementation (libs.retrofit)
     // Gson -> json data to java or kotlin format

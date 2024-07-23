@@ -31,6 +31,6 @@ fun AppNavigationGraph() {
                 userViewModel = viewModel
             )
         }
-        composable(Routes.HOME_SCREEN_KEY) { HomeScreen(navController,viewModel) }
+        composable(Routes.HOME_SCREEN_KEY) { HomeScreen() }
     }
 }
