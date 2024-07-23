@@ -14,3 +14,7 @@ data class UserSavedData(
     @ColumnInfo("employee") val employee: String = "",
     @ColumnInfo("role") val role: UserRole = UserRole.EMPLOYEE
 )
+
+fun UserSavedData.fromLoginModel(model: LoginDataModel) : UserSavedData{
+    return UserSavedData(model.token, model.email, model.fullName, model.employee, model.role)
+}

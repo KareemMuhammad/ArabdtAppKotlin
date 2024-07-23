@@ -8,7 +8,10 @@ import com.example.arabdtappkotlin.data.source.local.AppRoomDatabase
 import com.example.arabdtappkotlin.data.source.remote.AuthApiService
 import retrofit2.Response
 
-class AuthRepositoryImpl(val apiService: AuthApiService, val appRoomDatabase: AppRoomDatabase) :
+class AuthRepositoryImpl(
+    private val apiService: AuthApiService,
+    private val appRoomDatabase: AppRoomDatabase
+) :
     AuthRepository {
     override suspend fun login(email: String, password: String): Response<LoginResponse> {
         val request = LoginRequest(email, password)
@@ -16,7 +19,11 @@ class AuthRepositoryImpl(val apiService: AuthApiService, val appRoomDatabase: Ap
         return response
     }
 
-    override suspend fun getSavedUser(): LiveData<UserSavedData> {
+    override suspend fun getSavedUser(): UserSavedData {
         return appRoomDatabase.userDao().get()
+    }
+
+    override suspend fun saveUser(user: UserSavedData) {
+        appRoomDatabase.userDao().insert(user = user)
     }
 }

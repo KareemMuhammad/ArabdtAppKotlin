@@ -22,10 +22,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.arabdtappkotlin.R
-import com.example.arabdtappkotlin.ui.helpers.appTextFieldColors
-import com.example.arabdtappkotlin.ui.helpers.appTextFieldModifier
+import com.example.arabdtappkotlin.ui.components.appTextFieldColors
+import com.example.arabdtappkotlin.ui.components.appTextFieldModifier
 import com.example.arabdtappkotlin.ui.navigation.Routes
-import com.example.arabdtappkotlin.viewModel.UiState
+import com.example.arabdtappkotlin.utils.AppState
 import com.example.arabdtappkotlin.viewModel.UserViewModel
 
 @Composable
@@ -42,15 +42,15 @@ fun LoginScreen(navController: NavController, userViewModel: UserViewModel) {
     println("state::: $state")
     LaunchedEffect(state) {
         when (state) {
-            is UiState.Init -> Unit
-            is UiState.Loading -> Unit
-            is UiState.Success -> {
+            is AppState.Init -> Unit
+            is AppState.Loading -> Unit
+            is AppState.Success -> {
                 navController.navigate(Routes.HOME_SCREEN_KEY)
             }
 
-            is UiState.Error -> {
+            is AppState.Error -> {
                 showSnackbar = true
-                snackbarMessage = (state as UiState.Error).ex
+                snackbarMessage = (state as AppState.Error).message ?: "Error"
             }
         }
     }
@@ -135,7 +135,7 @@ fun LoginScreen(navController: NavController, userViewModel: UserViewModel) {
         )
         Spacer(modifier = Modifier.height(24.dp))
 
-        if (state is UiState.Loading) {
+        if (state is AppState.Loading) {
             CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
         } else {
             Button(
@@ -171,7 +171,7 @@ fun LoginScreen(navController: NavController, userViewModel: UserViewModel) {
                 },
                 modifier = Modifier.padding(8.dp)
             ) {
-                Text(text = (state as UiState.Error).ex)
+                Text(text = (state as AppState.Error).message ?: "Error")
             }
         }
         Spacer(modifier = Modifier.height(16.dp))

@@ -96,14 +96,15 @@ fun OnboardingScreen(navController: NavController) {
             currentPage = currentPage.value,
             noOfPages = onboardPages.size
         ) {
-            currentPage.value++
             if (currentPage.value == (onboardPages.size - 1)) {
                 PreferencesManager(context = context).saveBoolean(
                     key = PreferencesManager.ONBOARDING_KEY,
                     true
                 )
                 navController.navigate(Routes.LOGIN_SCREEN_KEY)
+                return@OnBoardNavButton
             }
+            currentPage.value++
         }
     }
 }

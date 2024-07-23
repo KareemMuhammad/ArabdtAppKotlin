@@ -7,5 +7,6 @@ import retrofit2.Response
 
 interface AuthRepository {
     suspend fun login(email: String, password: String): Response<LoginResponse>?
-    suspend fun getSavedUser(): LiveData<UserSavedData>
+    suspend fun getSavedUser(): UserSavedData
+    suspend fun saveUser(user: UserSavedData)
 }

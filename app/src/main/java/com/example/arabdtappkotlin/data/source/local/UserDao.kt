@@ -16,6 +16,6 @@ interface UserDao {
     @Delete
     fun clear(vararg user: UserSavedData)
 
-    @Query("SELECT * FROM user_table ORDER BY full_name ASC")
-    fun get(): LiveData<UserSavedData>
+    @Query("SELECT * FROM user_table LIMIT 1")
+    fun get(): UserSavedData
 }
