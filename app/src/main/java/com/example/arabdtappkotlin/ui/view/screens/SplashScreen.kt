@@ -27,7 +27,7 @@ fun SplashScreen(navController: NavController) {
             if (userToken.isNullOrEmpty()) {
                 navigateToLoginScreen(navController)
             } else {
-                navigateToHomeScreen(navController)
+                navigateToMainScreen(navController)
             }
         } else {
             navigateToOnBoardingScreen(navController)
@@ -48,8 +48,8 @@ private fun navigateToOnBoardingScreen(navController: NavController) {
     }
 }
 
-private fun navigateToHomeScreen(navController: NavController) {
-    navController.navigate(Routes.HOME_SCREEN_KEY) {
+private fun navigateToMainScreen(navController: NavController) {
+    navController.navigate(Routes.MAIN_SCREEN_KEY) {
         popUpTo(Routes.SPLASH_SCREEN_KEY) { inclusive = true }
     }
 }

@@ -6,15 +6,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.arabdtappkotlin.App
 import com.example.arabdtappkotlin.data.repositories.AuthRepositoryImpl
+import com.example.arabdtappkotlin.ui.view.screens.AllAttendanceScreen
 import com.example.arabdtappkotlin.ui.view.screens.HomeScreen
 import com.example.arabdtappkotlin.ui.view.screens.LoginScreen
+import com.example.arabdtappkotlin.ui.view.screens.MainScreen
+import com.example.arabdtappkotlin.ui.view.screens.MoreScreen
 import com.example.arabdtappkotlin.ui.view.screens.OnboardingScreen
 import com.example.arabdtappkotlin.ui.view.screens.SplashScreen
 import com.example.arabdtappkotlin.viewModel.UserViewModel
 
 @Composable
 fun AppNavigationGraph() {
-    val viewModel =
+    val userViewModel =
         UserViewModel(
             authRepository = AuthRepositoryImpl(
                 apiService = App.retrofit.authApiService,
@@ -28,9 +31,13 @@ fun AppNavigationGraph() {
         composable(Routes.LOGIN_SCREEN_KEY) {
             LoginScreen(
                 navController,
-                userViewModel = viewModel
+                userViewModel = userViewModel
             )
         }
-        composable(Routes.HOME_SCREEN_KEY) { HomeScreen() }
+        composable(Routes.MAIN_SCREEN_KEY) { MainScreen(navController,userViewModel) }
+        composable(Routes.HOME_SCREEN_KEY) { HomeScreen(navController,userViewModel) }
+        composable(Routes.MORE_SCREEN_KEY) { MoreScreen() }
+        composable(Routes.ALL_ATTENDANCE_SCREEN_KEY) { AllAttendanceScreen(navController) }
+
     }
 }

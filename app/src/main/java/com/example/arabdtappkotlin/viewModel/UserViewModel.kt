@@ -50,7 +50,6 @@ class UserViewModel(private val authRepository: AuthRepositoryImpl) : ViewModel(
                         _savedUser.value = userSavedData
                         authRepository.saveUser(userSavedData)
                     }
-
                 } else {
                     _state.value = AppState.Error("Failure")
                 }

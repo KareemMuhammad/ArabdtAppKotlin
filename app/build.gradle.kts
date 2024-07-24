@@ -64,6 +64,7 @@ dependencies {
     implementation (libs.androidx.foundation)
     implementation (libs.androidx.constraintlayout.compose)
     implementation (libs.ui)
+    implementation(libs.coil.compose)
     // Retrofit
     implementation (libs.retrofit)
     // Gson -> json data to java or kotlin format

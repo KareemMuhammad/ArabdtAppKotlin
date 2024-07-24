@@ -45,7 +45,7 @@ fun LoginScreen(navController: NavController, userViewModel: UserViewModel) {
             is AppState.Init -> Unit
             is AppState.Loading -> Unit
             is AppState.Success -> {
-                navController.navigate(Routes.HOME_SCREEN_KEY)
+                navController.navigate(Routes.MAIN_SCREEN_KEY)
             }
 
             is AppState.Error -> {

@@ -6,15 +6,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "https://netst-api.arabdt.com/"
     private val retrofit: Retrofit
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY // Log request and response bodies
     }
 
     init {
+        println("::::Retrofit Initializing::::")
         retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(ApiConstants.BASE_URL)
             .client(provideOkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
