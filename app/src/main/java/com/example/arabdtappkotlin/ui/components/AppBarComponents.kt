@@ -18,6 +18,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -71,9 +72,9 @@ private fun CustomAppBarTitle(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 16.dp)
+            .padding(start = 16.dp, end = 24.dp, top = 16.dp, bottom = 16.dp)
     ) {
-        Row {
+        Row (verticalAlignment = Alignment.CenterVertically){
             if (withBackButton) {
                 IconButton(onClick = { onBackPressed?.invoke() }) {
                     Icon(
@@ -82,7 +83,7 @@ private fun CustomAppBarTitle(
                         tint = MaterialTheme.colorScheme.surfaceVariant,
                     )
                 }
-                HorizontalSpace(width = 8)
+                HorizontalSpace(width = 4)
             }
             Text(
                 text = title,

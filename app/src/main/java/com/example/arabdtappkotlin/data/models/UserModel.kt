@@ -2,12 +2,6 @@ package com.example.arabdtappkotlin.data.models
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginResponse(
-    val statusCode: Int,
-    val message: String,
-    val body: LoginDataModel
-)
-
 data class LoginDataModel(
     @SerializedName("sid") val token: String = "",
     @SerializedName("email") val email: String = "",

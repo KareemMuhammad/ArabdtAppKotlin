@@ -20,7 +20,7 @@ fun AppNavigationGraph() {
     val userViewModel =
         UserViewModel(
             authRepository = AuthRepositoryImpl(
-                apiService = App.retrofit.authApiService,
+                apiService = App.retrofitClient.authApiService,
                 appRoomDatabase = App.appDatabase
             )
         )

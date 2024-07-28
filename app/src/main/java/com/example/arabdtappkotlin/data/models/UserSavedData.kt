@@ -16,13 +16,17 @@ data class UserSavedData(
     @ColumnInfo("image") val image: String = "",
 )
 
-fun UserSavedData.fromLoginModel(model: LoginDataModel): UserSavedData {
-    return UserSavedData(
-        model.token,
-        model.email,
-        model.fullName,
-        model.employee,
-        model.role,
-        ApiConstants.IMAGE_BASE_URL + (model.userData?.profileImage ?: "")
-    )
+fun UserSavedData.fromLoginModel(model: LoginDataModel?): UserSavedData {
+    if (model != null) {
+        return UserSavedData(
+            model.token,
+            model.email,
+            model.fullName,
+            model.employee,
+            model.role,
+            ApiConstants.IMAGE_BASE_URL + (model.userData?.profileImage ?: "")
+        )
+    } else {
+        return UserSavedData()
+    }
 }

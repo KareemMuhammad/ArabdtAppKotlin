@@ -1,11 +1,8 @@
 package com.example.arabdtappkotlin.viewModel
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.arabdtappkotlin.data.models.LoginDataModel
 import com.example.arabdtappkotlin.data.models.UserSavedData
 import com.example.arabdtappkotlin.data.models.fromLoginModel
 import com.example.arabdtappkotlin.data.repositories.AuthRepositoryImpl

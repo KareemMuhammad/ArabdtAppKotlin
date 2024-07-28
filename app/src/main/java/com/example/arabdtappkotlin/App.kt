@@ -8,12 +8,11 @@ import com.example.arabdtappkotlin.data.source.remote.RetrofitClient
 class App : Application() {
 
     companion object {
-        lateinit var retrofit: RetrofitClient
+        val retrofitClient: RetrofitClient by lazy { RetrofitClient }
         lateinit var appDatabase: AppRoomDatabase
     }
     override fun onCreate() {
         super.onCreate()
-        retrofit = RetrofitClient
         appDatabase = Room.databaseBuilder(
             applicationContext,
             AppRoomDatabase::class.java, "arabDT_database"
