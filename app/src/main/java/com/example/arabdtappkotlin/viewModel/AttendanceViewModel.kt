@@ -3,6 +3,7 @@ package com.example.arabdtappkotlin.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.arabdtappkotlin.data.models.AttendanceDataModel
+import com.example.arabdtappkotlin.data.models.requests.AttendanceListRequest
 import com.example.arabdtappkotlin.data.repositories.AttendanceRepositoryImpl
 import com.example.arabdtappkotlin.utils.AppState
 import com.example.arabdtappkotlin.utils.StateValue
@@ -21,7 +22,9 @@ class AttendanceViewModel(val attendanceRepositoryImpl: AttendanceRepositoryImpl
         viewModelScope.launch {
             _state.value = AppState.Loading()
             try {
-                val response = attendanceRepositoryImpl.loadAttendanceList()
+                val request = AttendanceListRequest("", "")
+                val response =
+                    attendanceRepositoryImpl.loadAttendanceList(request, page = 0, limit = 2)
                 if (response.isSuccessful) {
                     println("Attendance list:: ${response.body()}")
                     val attendanceList = response.body()?.body
