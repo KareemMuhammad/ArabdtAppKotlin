@@ -86,6 +86,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     kapt(libs.androidx.room.compiler)
+    // notification
+    implementation(libs.accompanist.permissions)
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
