@@ -51,6 +51,7 @@ class UserViewModel(private val authRepository: AuthRepositoryImpl) : ViewModel(
                     _state.value = AppState.Error("Failure")
                 }
             } catch (e: Exception) {
+                println("userViewModel:: ${e.message}")
                 _state.value = AppState.Error(e.message ?: "")
             }
         }

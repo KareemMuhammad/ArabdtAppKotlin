@@ -20,16 +20,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.arabdtappkotlin.data.models.AttendanceDataModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-@Preview
 @Composable
-fun AttendanceWidget() {
+fun AttendanceWidget(attendance: AttendanceDataModel) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -37,19 +36,19 @@ fun AttendanceWidget() {
             .fillMaxWidth()
             .padding(13.dp)
     ) {
-        DateContainer(date = "2024-07-24")
+        DateContainer(date = attendance.date)
         Spacer(modifier = Modifier.weight(1f))
         VerticalDivider(color = MaterialTheme.colorScheme.surfaceVariant)
         Spacer(modifier = Modifier.weight(1f))
-        TimeContainer("Check In")
+        TimeContainer("Check In",attendance.checkInTime ?: "")
         Spacer(modifier = Modifier.weight(1f))
         VerticalDivider(color = MaterialTheme.colorScheme.surfaceVariant)
         Spacer(modifier = Modifier.weight(1f))
-        TimeContainer("Check Out")
+        TimeContainer("Check Out",attendance.checkoutTime ?: "")
         Spacer(modifier = Modifier.weight(1f))
         VerticalDivider(color = MaterialTheme.colorScheme.surfaceVariant)
         Spacer(modifier = Modifier.weight(1f))
-        TimeContainer("Duration")
+        TimeContainer("Duration",attendance.duration ?: "")
     }
 }
 
@@ -74,7 +73,7 @@ fun DateContainer(date: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TimeContainer(title: String) {
+fun TimeContainer(title: String,value: String) {
     Box(
         modifier = Modifier
             .height(52.dp),
@@ -85,7 +84,7 @@ fun TimeContainer(title: String) {
                 text = title,
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold)
             )
-            Text(text = "2:00 PM", style = MaterialTheme.typography.bodyMedium)
+            Text(text = value, style = MaterialTheme.typography.bodyMedium)
         }
     }
 }

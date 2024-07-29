@@ -6,7 +6,9 @@ import com.example.arabdtappkotlin.data.models.requests.AttendanceListRequest
 import com.example.arabdtappkotlin.data.source.remote.AttendanceApiService
 import retrofit2.Response
 
-class AttendanceRepositoryImpl(val apiService: AttendanceApiService) : AttendanceRepository {
+class AttendanceRepositoryImpl(
+    val apiService: AttendanceApiService,
+) : AttendanceRepository {
     override suspend fun loadAttendanceList(
         attendanceBody: AttendanceListRequest,
         page: Int,

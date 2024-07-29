@@ -17,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -28,19 +29,26 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.arabdtappkotlin.App
+import com.example.arabdtappkotlin.data.repositories.AttendanceRepositoryImpl
 import com.example.arabdtappkotlin.ui.components.CustomAppBar
 import com.example.arabdtappkotlin.ui.components.HorizontalSpace
 import com.example.arabdtappkotlin.ui.components.VerticalSpace
 import com.example.arabdtappkotlin.ui.navigation.Routes
-import com.example.arabdtappkotlin.ui.view.widgets.AttendanceWidget
+import com.example.arabdtappkotlin.viewModel.AttendanceViewModel
 import com.example.arabdtappkotlin.viewModel.UserViewModel
 
 @Composable
 fun HomeScreen(navController: NavController, userViewModel: UserViewModel) {
     val userSavedData by userViewModel.savedUser.collectAsState()
-//    LaunchedEffect(Unit) {
-//
-//    }
+    val attendanceViewModel = AttendanceViewModel(
+        attendanceRepositoryImpl = AttendanceRepositoryImpl(
+            apiService = App.retrofitClient.attendanceApiService
+        )
+    )
+    LaunchedEffect(Unit) {
+//        attendanceViewModel.loadAttendanceList(limit = 2)
+    }
 
     Scaffold(topBar = {
         CustomAppBar(
@@ -117,7 +125,7 @@ fun HomeScreen(navController: NavController, userViewModel: UserViewModel) {
                 Surface(
                     modifier = Modifier.background(color = MaterialTheme.colorScheme.surface)
                 ) {
-                    AttendanceWidget()
+
                 }
             }
         }

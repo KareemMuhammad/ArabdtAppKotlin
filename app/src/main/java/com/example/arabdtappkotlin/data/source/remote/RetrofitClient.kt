@@ -1,6 +1,5 @@
 package com.example.arabdtappkotlin.data.source.remote
 
-import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,14 +14,8 @@ object RetrofitClient {
         println("::::Retrofit Initializing::::")
         retrofit = Retrofit.Builder()
             .baseUrl(ApiConstants.BASE_URL)
-            .client(provideOkHttpClient())
+            .client(OkHTTPAppClient.okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    private fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
             .build()
     }
 
