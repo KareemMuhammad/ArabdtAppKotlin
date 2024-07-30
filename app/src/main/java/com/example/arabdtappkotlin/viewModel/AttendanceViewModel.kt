@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.arabdtappkotlin.App
 import com.example.arabdtappkotlin.data.models.AttendanceDataModel
 import com.example.arabdtappkotlin.data.models.requests.AttendanceListRequest
-import com.example.arabdtappkotlin.data.repositories.AttendanceRepositoryImpl
+import com.example.arabdtappkotlin.data.repositories.AttendanceRepository
 import com.example.arabdtappkotlin.utils.AppState
 import com.example.arabdtappkotlin.utils.StateValue
 import kotlinx.coroutines.Dispatchers.IO
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AttendanceViewModel(private val attendanceRepositoryImpl: AttendanceRepositoryImpl) :
+class AttendanceViewModel(private val attendanceRepositoryImpl: AttendanceRepository) :
     ViewModel() {
     private val _state = MutableStateFlow<AppState<StateValue>>(AppState.Init())
     val state: StateFlow<AppState<StateValue>> get() = _state

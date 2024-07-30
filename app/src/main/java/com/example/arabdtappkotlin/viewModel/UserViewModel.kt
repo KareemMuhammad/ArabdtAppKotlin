@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.arabdtappkotlin.data.models.UserSavedData
 import com.example.arabdtappkotlin.data.models.fromLoginModel
-import com.example.arabdtappkotlin.data.repositories.AuthRepositoryImpl
+import com.example.arabdtappkotlin.data.repositories.AuthRepository
 import com.example.arabdtappkotlin.utils.AppState
 import com.example.arabdtappkotlin.utils.PreferencesManager
 import com.example.arabdtappkotlin.utils.StateValue
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class UserViewModel(private val authRepository: AuthRepositoryImpl) : ViewModel() {
+class UserViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
 
     private val _state = MutableStateFlow<AppState<StateValue>>(AppState.Init())
@@ -33,7 +33,7 @@ class UserViewModel(private val authRepository: AuthRepositoryImpl) : ViewModel(
             _state.value = AppState.Loading()
             try {
                 val response = authRepository.login(email, password)
-                if (response.isSuccessful) {
+                if (response?.isSuccessful == true) {
                     val userData = response.body()
                     println("userData::: $userData")
                     PreferencesManager(context = context).saveString(

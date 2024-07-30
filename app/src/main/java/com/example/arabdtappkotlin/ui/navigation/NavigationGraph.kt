@@ -1,5 +1,7 @@
 package com.example.arabdtappkotlin.ui.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,6 +17,7 @@ import com.example.arabdtappkotlin.ui.view.screens.OnboardingScreen
 import com.example.arabdtappkotlin.ui.view.screens.SplashScreen
 import com.example.arabdtappkotlin.viewModel.UserViewModel
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun AppNavigationGraph() {
     val userViewModel =
